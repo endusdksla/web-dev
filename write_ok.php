@@ -5,14 +5,14 @@ include 'db_connect.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// [변경 1] 'board' 식별자를 POST 방식으로 받아옵니다.
+// 'board' 식별자를 POST 방식으로 받아옵니다.
 $board_id = isset($_POST['board']) ? $_POST['board'] : 'free';
 $allowed_boards = ['free', 'guestbook'];
 if (!in_array($board_id, $allowed_boards)) {
     die("존재하지 않는 게시판입니다.");
 }
 
-// [변경 2] 식별자를 이용해 테이블 이름을 동적으로 만듭니다.
+// 식별자를 이용해 테이블 이름을 동적으로 만듭니다.
 $board_table = "board_" . $board_id;
 
 // 사용자 입력
