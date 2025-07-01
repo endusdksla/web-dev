@@ -6,19 +6,19 @@ include 'db_connect.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// [변경 1] 어떤 게시판인지 식별자를 받아옵니다.
+// 어떤 게시판인지 식별자를 받아옵니다.
 $board_id = isset($_GET['board']) ? $_GET['board'] : 'free';
 $allowed_boards = ['free', 'guestbook'];
 if (!in_array($board_id, $allowed_boards)) {
     die("존재하지 않는 게시판입니다.");
 }
 
-// [변경 2] 식별자를 이용해 테이블 이름을 동적으로 만듭니다.
+// 식별자를 이용해 테이블 이름을 동적으로 만듭니다.
 $board_table = "board_" . $board_id;
 
 $no = $_GET['id'];
 
-// [변경 3] 쿼리에서 테이블 이름을 변수로 변경합니다.
+// 쿼리에서 테이블 이름을 변수로 변경합니다.
 $query = "select * from $board_table where id=$no";
 $result = mysqli_query($conn, $query);
 $board = mysqli_fetch_array($result);
@@ -74,7 +74,7 @@ if ($_SESSION['user_id'] != 'admin' && $board['user_id'] != $_SESSION['user_id']
             <div class="form-group">
                 <label for="fileInput">첨부파일 (변경할 경우에만 선택)</label>
 
-                <!-- [변경] PHP if문을 사용하여 파일 경로가 있을 때만 이미지 태그를 보여줍니다. -->
+                <!-- PHP if문을 사용하여 파일 경로가 있을 때만 이미지 태그를 보여줍니다. -->
                 <?php if (!empty($board['file_path'])): ?>
                     <a href="uploads/<?php echo htmlspecialchars($board['file_path']);?>" download>
                         <img id="imagePreview" src="uploads/<?php echo htmlspecialchars($board['file_path']); ?>" alt="파일 미리보기" width="450" height="250" style="border:1px solid #ccc; object-fit: cover;">
