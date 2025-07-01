@@ -1,13 +1,11 @@
 <?php
 session_start();
 
-// 1. 가장 먼저 로그인 여부를 확인합니다.
 if(!isset($_SESSION['user_id'])){
     header('Location: ./login.php');
     exit;
 }
 
-// 2. GET 파라미터들을 먼저 받아옵니다.
 $board_id = isset($_GET['board']) ? $_GET['board'] : 'free';
 $search_category = isset($_GET['search_category']) ? $_GET['search_category'] : 'free';
 $search_keyword = isset($_GET['search_keyword']) ? $_GET['search_keyword'] : '';
@@ -29,7 +27,6 @@ $page_title = ($board_id == 'free') ? "자유게시판" : "방명록";
     <meta charset="UTF-8">
     <title><?php echo $page_title; ?></title>
     <style>
-        /* 스타일은 변경 없이 그대로 유지합니다. */
         body { font-family: 'Malgun Gothic', sans-serif; }
         .container { max-width: 1000px; margin: 20px auto; padding: 20px; }
         .list-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
@@ -57,7 +54,7 @@ $page_title = ($board_id == 'free') ? "자유게시판" : "방명록";
 <body>
 <div class="container">
     <div class="welcome-msg">
-        <!-- 3. 환영 메시지를 먼저 출력합니다. -->
+        <!-- 환영 메시지를 먼저 출력 -->
         <span><?php echo htmlspecialchars($_SESSION['user_id']); ?>님 안녕하세요</span>
         <a href="logout.php" class="logout-btn">로그아웃</a>
     </div>
@@ -84,7 +81,6 @@ $page_title = ($board_id == 'free') ? "자유게시판" : "방명록";
         </thead>
         <tbody>
             <?php
-                // 4. HTML 본문 안에서 DB 작업을 수행합니다.
                 $servername = "127.0.0.1";
                 $username = "test";
                 $password = "1234";
@@ -109,7 +105,6 @@ $page_title = ($board_id == 'free') ? "자유게시판" : "방명록";
                             $where_sql = " WHERE content LIKE '%$escaped_keyword%'";
                             break;
                         case 'user_id':
-                            // ★★★ 여기가 글쓴이를 출력하는 핵심입니다.
                             $where_sql = " WHERE user_id LIKE '%$escaped_keyword%'";
                             break;
                     }
@@ -142,7 +137,6 @@ $page_title = ($board_id == 'free') ? "자유게시판" : "방명록";
                         <tr>
                             <td><?php echo $board['id']; ?></td>
                             <td style="text-align: left; padding-left: 20px;"><a href="/read.php?id=<?php echo $board['id'];?>&board=<?php echo $board_id; ?>"><?php echo $title;?></a></td>
-                            <!-- 5. DB에서 가져온 글쓴이 정보를 출력합니다. -->
                             <td><?php echo htmlspecialchars($board['user_id']); ?></td>
                             <td><?php echo $board['date']; ?></td>
                         </tr>
