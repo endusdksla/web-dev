@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-// [변경 1] 어떤 게시판에 글을 쓸 것인지 식별자를 받아옵니다.
+// 어떤 게시판에 글을 쓸 것인지 식별자를 받아옵니다.
 $board_id = isset($_GET['board']) ? $_GET['board'] : 'free';
 $allowed_boards = ['free', 'guestbook'];
 if (!in_array($board_id, $allowed_boards)) {
     die("존재하지 않는 게시판입니다.");
 }
 
-// [선택 사항] 게시판 이름에 따라 페이지 제목을 동적으로 변경합니다.
+// 게시판 이름에 따라 페이지 제목을 동적으로 변경합니다.
 $page_title_prefix = ($board_id == 'free') ? "자유게시판" : "방명록";
 ?>
 <!DOCTYPE html>
